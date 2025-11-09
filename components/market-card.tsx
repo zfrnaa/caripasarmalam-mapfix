@@ -16,6 +16,7 @@ import { useLanguage } from '@/components/language-provider';
 import { getMarketOpenStatus } from '@/lib/utils';
 import { formatWeekday } from '@/lib/i18n';
 import { DayCode } from '@/app/enums';
+import openDirections from '@/lib/directions';
 
 interface MarketCardProps {
   market: Market;
