@@ -22,6 +22,7 @@ import { useLanguage } from '@/components/language-provider';
 import { getMarketOpenStatus } from '@/lib/utils';
 import { formatWeekday } from '@/lib/i18n';
 import { DayCode } from '@/app/enums';
+import openDirections from '@/lib/directions';
 
 interface MarketCardProps {
   market: Market;
@@ -208,7 +209,19 @@ export function MarketCard({
         <div className="mt-auto" />
 
         <div className="flex gap-2">
-          {market.location?.gmaps_link && (
+          {market.location?.latitude && market.location?.longitude ? (
+            <Button
+              className="flex-1"
+              onClick={() =>
+                openDirections(
+                  market.location!.latitude,
+                  market.location!.longitude
+                )
+              }
+            >
+              {t.showDirection}
+            </Button>
+          ) : market.location?.gmaps_link ? (
             <Button asChild className="flex-1">
               <a
                 href={market.location.gmaps_link}
@@ -218,7 +231,8 @@ export function MarketCard({
                 {t.showDirection}
               </a>
             </Button>
-          )}
+          ) : null}
+
           <Link href={`/markets/${market.id}`}>
             <Button variant="outline">{t.viewDetails}</Button>
           </Link>
